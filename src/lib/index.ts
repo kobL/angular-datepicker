@@ -11,6 +11,6 @@ export {IDatePickerConfig} from './date-picker/date-picker-config.model';
 export {IDatePickerDirectiveConfig} from './date-picker/date-picker-directive-config.model';
 export {IMonthCalendarConfig} from './month-calendar/month-calendar-config';
 export {ISelectionEvent} from './common/types/selection-evet.model';
-export {SelectEvent} from './common/types/selection-evet.enum.';
+export {SelectEvent} from './common/types/selection-evet.enum';
 
 export * from './date-picker.module';
