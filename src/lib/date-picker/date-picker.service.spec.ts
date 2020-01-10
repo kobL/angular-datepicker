@@ -1,4 +1,4 @@
-import {inject, TestBed} from '@angular/core/testing';
+﻿import {inject, TestBed} from '@angular/core/testing';
 import {DatePickerService} from './date-picker.service';
 import * as momentNs from 'moment';
 import {Moment} from 'moment';
@@ -30,8 +30,8 @@ describe('Service: DatePicker', () => {
         format: 'YYYY-MM-DD'
       });
 
-      expect((<Moment>config1.min).isSame(moment('2016-10-25', 'YYYY-MM-DD'), 'day')).toBe(true);
-      expect((<Moment>config1.max).isSame(moment('2017-10-25', 'YYYY-MM-DD'), 'day')).toBe(true);
+      expect((<Moment>config1.min).isSame(moment.utc('2016-10-25', 'YYYY-MM-DD'), 'day')).toBe(true);
+      expect((<Moment>config1.max).isSame(moment.utc('2017-10-25', 'YYYY-MM-DD'), 'day')).toBe(true);
 
       const config2 = service.getConfig({
         min: moment('2016-10-25', 'YYYY-MM-DD'),

@@ -1,4 +1,4 @@
-import {ECalendarValue} from '../common/types/calendar-value-enum';
+﻿import {ECalendarValue} from '../common/types/calendar-value-enum';
 import {SingleCalendarValue} from '../common/types/single-calendar-value';
 import {
   ChangeDetectionStrategy,
@@ -109,8 +109,8 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
   _selected: Moment;
 
   constructor(public timeSelectService: TimeSelectService,
-              public utilsService: UtilsService,
-              public cd: ChangeDetectorRef) {
+    public utilsService: UtilsService,
+    public cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -145,8 +145,8 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
       const momentValue = this.utilsService
         .convertToMomentArray(value, {
           allowMultiSelect: false,
-          format: this.timeSelectService.getTimeFormat(this.componentConfig)
-        })[0];
+          format: this.timeSelectService.getTimeFormat(this.componentConfig),
+          parseTimeAsUTC: this.config.parseTimeAsUTC})[0];
       if (momentValue.isValid()) {
         this.selected = momentValue;
         this.inputValueType = this.utilsService

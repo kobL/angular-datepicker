@@ -1,4 +1,4 @@
-import {CalendarMode} from '../common/types/calendar-mode';
+﻿import {CalendarMode} from '../common/types/calendar-mode';
 import {IDatePickerDirectiveConfig} from './date-picker-directive-config.model';
 import {DatePickerDirectiveService} from './date-picker-directive.service';
 import {IDpDayPickerApi} from './date-picker.api';
@@ -19,7 +19,7 @@ import {NgControl} from '@angular/forms';
 import {CalendarValue} from '../common/types/calendar-value';
 import {SingleCalendarValue} from '../common/types/single-calendar-value';
 import {INavEvent} from '../common/models/navigation-event.model';
-import {UtilsService} from '../common/services/utils/utils.service'
+import {UtilsService} from '../common/services/utils/utils.service';
 import {ISelectionEvent} from '../common/types/selection-event.model';
 
 @Directive({

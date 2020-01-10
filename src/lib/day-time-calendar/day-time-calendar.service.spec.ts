@@ -1,4 +1,4 @@
-import {inject, TestBed} from '@angular/core/testing';
+﻿import {inject, TestBed} from '@angular/core/testing';
 import {DayTimeCalendarService} from './day-time-calendar.service';
 import * as momentNs from 'moment';
 import {UtilsService} from '../common/services/utils/utils.service';
@@ -63,8 +63,13 @@ describe('Service: DayTimeCalendarService', () => {
 
   it('should check the updateTime method', inject([DayTimeCalendarService], (service: DayTimeCalendarService) => {
       const daytime = moment('2011091313:12:11', COMBINED_FORMAT);
+      const config: IDayCalendarConfigInternal = {
+        min: daytime.clone().subtract(50, 'm'),
+        max: daytime.clone().subtract(10, 'm')
+      };
+
       const time = moment('03:11:10', TIME_FORMAT);
-      expect(service.updateTime(daytime, time).format(COMBINED_FORMAT)).toEqual('2011091303:11:10');
+      expect(service.updateTime(daytime, time, config).format(COMBINED_FORMAT)).toEqual('2011091303:11:10');
     })
   );
 });

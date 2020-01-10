@@ -1,4 +1,4 @@
-import {ECalendarValue} from '../common/types/calendar-value-enum';
+﻿import {ECalendarValue} from '../common/types/calendar-value-enum';
 import {SingleCalendarValue} from '../common/types/single-calendar-value';
 import {ECalendarMode} from '../common/types/calendar-mode-enum';
 import {
@@ -80,8 +80,7 @@ export class DayCalendarComponent implements OnInit, OnChanges, ControlValueAcce
     this.navLabel = this.dayCalendarService.getHeaderLabel(this.componentConfig, this._currentDateView);
     this.showLeftNav = this.dayCalendarService.shouldShowLeft(this.componentConfig.min, this.currentDateView);
     this.showRightNav = this.dayCalendarService.shouldShowRight(this.componentConfig.max, this.currentDateView);
-  }
-  ;
+  };
 
   @Input() config: IDayCalendarConfig;
   @Input() displayDate: SingleCalendarValue;

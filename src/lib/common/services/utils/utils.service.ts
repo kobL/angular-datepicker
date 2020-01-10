@@ -98,7 +98,7 @@ export class UtilsService {
 
   // todo:: add unit test
   convertToMomentArray(value: CalendarValue,
-                       config: {allowMultiSelect?: boolean, format?: string}): Moment[] {
+                       config: {allowMultiSelect?: boolean, format?: string, parseTimeAsUTC?: boolean}): Moment[] {
     let retVal: Moment[];
     switch (this.getInputType(value, config.allowMultiSelect)) {
       case (ECalendarValue.String):

@@ -1,4 +1,4 @@
-import {Moment} from 'moment/moment';
+﻿import {Moment} from 'moment/moment';
 import {ICalendar, ICalendarInternal} from '../common/models/calendar.model';
 import {ECalendarValue} from '../common/types/calendar-value-enum';
 
@@ -16,6 +16,7 @@ export interface IConfig {
   showTwentyFourHours?: boolean;
   timeSeparator?: string;
   returnedValueType?: ECalendarValue;
+  parseTimeAsUTC?: boolean;
 }
 
 export interface ITimeSelectConfig extends IConfig, ICalendar {

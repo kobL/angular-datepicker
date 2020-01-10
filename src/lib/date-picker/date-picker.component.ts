@@ -1,4 +1,4 @@
-import {IDate} from '../common/models/date.model';
+﻿import {IDate} from '../common/models/date.model';
 import {DomHelper} from '../common/services/dom-appender/dom-appender.service';
 import {UtilsService} from '../common/services/utils/utils.service';
 import {CalendarMode} from '../common/types/calendar-mode';
@@ -77,11 +77,11 @@ import {ISelectionEvent} from '../common/types/selection-event.model';
   ]
 })
 export class DatePickerComponent implements OnChanges,
-                                            OnInit,
-                                            AfterViewInit,
-                                            ControlValueAccessor,
-                                            Validator,
-                                            OnDestroy {
+  OnInit,
+  AfterViewInit,
+  ControlValueAccessor,
+  Validator,
+  OnDestroy {
 
   get openOnFocus(): boolean {
     return this.componentConfig.openOnFocus;
@@ -200,11 +200,11 @@ export class DatePickerComponent implements OnChanges,
   _currentDateView: Moment;
 
   constructor(private readonly dayPickerService: DatePickerService,
-              private readonly domHelper: DomHelper,
-              private readonly elemRef: ElementRef,
-              private readonly renderer: Renderer2,
-              private readonly utilsService: UtilsService,
-              public readonly cd: ChangeDetectorRef) {
+    private readonly domHelper: DomHelper,
+    private readonly elemRef: ElementRef,
+    private readonly renderer: Renderer2,
+    private readonly utilsService: UtilsService,
+    public readonly cd: ChangeDetectorRef) {
   }
 
   @HostListener('click')
@@ -434,7 +434,7 @@ export class DatePickerComponent implements OnChanges,
         date: strVal,
         type: SelectEvent.INPUT,
         granularity: null
-      })
+      });
     } else {
       this._selected = this.utilsService
         .getValidMomentArray(strVal, this.componentConfig.format);

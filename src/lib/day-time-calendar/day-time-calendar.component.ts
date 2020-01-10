@@ -1,4 +1,4 @@
-import {ECalendarValue} from '../common/types/calendar-value-enum';
+﻿import {ECalendarValue} from '../common/types/calendar-value-enum';
 import {SingleCalendarValue} from '../common/types/single-calendar-value';
 import {
   ChangeDetectionStrategy,
@@ -67,7 +67,6 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
     this._selected = selected;
     this.onChangeCallback(this.processOnChangeCallback(selected));
   }
-  ;
 
   @Input() config: IDayTimeCalendarConfig;
   @Input() displayDate: SingleCalendarValue;
@@ -124,8 +123,8 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
       this.selected = this.utilsService
         .convertToMomentArray(value, {
           format: this.componentConfig.format,
-          allowMultiSelect: false
-        })[0];
+          allowMultiSelect: false,
+          parseTimeAsUTC: this.config.parseTimeAsUTC})[0];
       this.inputValueType = this.utilsService
         .getInputType(this.inputValue, false);
     } else {
@@ -177,7 +176,7 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
   }
 
   timeChange(time: IDate) {
-    this.selected = this.dayTimeCalendarService.updateTime(this.selected, time.date);
+    this.selected = this.dayTimeCalendarService.updateTime(this.selected, time.date, this.config);
     this.emitChange();
   }
 

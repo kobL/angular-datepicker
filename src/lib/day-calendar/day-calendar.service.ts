@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import * as momentNs from 'moment';
 import {Moment} from 'moment';
 import {WeekDays} from '../common/types/week-days.type';
@@ -55,7 +55,10 @@ export class DayCalendarService {
   generateMonthArray(config: IDayCalendarConfigInternal, month: Moment, selected: Moment[]): IDay[][] {
     let monthArray: IDay[][] = [];
     const firstDayOfWeekIndex = this.DAYS.indexOf(config.firstDayOfWeek);
-    const firstDayOfBoard = month.clone().startOf('month');
+    let firstDayOfBoard = month.clone().startOf('month');
+    if (!!selected.find(selectedDay => selectedDay.isUTC())) {
+      firstDayOfBoard = firstDayOfBoard.utc();
+    }
 
     while (firstDayOfBoard.day() !== firstDayOfWeekIndex) {
       firstDayOfBoard.subtract(1, 'day');
@@ -67,8 +70,8 @@ export class DayCalendarService {
     const today = moment();
 
     const daysOfCalendar: IDay[] = this.utilsService.createArray(42)
-      .reduce((array: IDay[]) => {
-        array.push({
+    .reduce((array: IDay[]) => {
+      array.push({
           date: current.clone(),
           selected: !!selected.find(selectedDay => current.isSame(selectedDay, 'day')),
           currentMonth: current.isSame(month, 'month'),

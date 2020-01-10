@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import * as momentNs from 'moment';
 import {Moment} from 'moment';
 
@@ -20,8 +20,8 @@ export class DayTimeCalendarService {
   };
 
   constructor(private utilsService: UtilsService,
-              private dayCalendarService: DayCalendarService,
-              private timeSelectService: TimeSelectService) {
+    private dayCalendarService: DayCalendarService,
+    private timeSelectService: TimeSelectService) {
   }
 
   getConfig(config: IDayTimeCalendarConfig): IDayTimeCalendarConfig {
@@ -38,7 +38,12 @@ export class DayTimeCalendarService {
 
   updateDay(current: Moment, day: Moment, config: IDayTimeCalendarConfig): Moment {
     const time = current ? current : moment();
-    let updated = moment(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
+    let updated: Moment;
+    if (config.parseTimeAsUTC) {
+      updated = moment.utc(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
+    } else {
+      updated = moment(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
+    }
 
     if (config.min) {
       const min = <Moment>config.min;
@@ -53,9 +58,11 @@ export class DayTimeCalendarService {
     return updated;
   }
 
-  updateTime(current: Moment, time: Moment): Moment {
+  updateTime(current: Moment, time: Moment, config: IDayTimeCalendarConfig): Moment {
     const day = current ? current : moment();
-
+    if (config.parseTimeAsUTC) {
+      return moment.utc(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
+    }
     return moment(day.format(DAY_FORMAT) + time.format(TIME_FORMAT), COMBINED_FORMAT);
   }
 }
