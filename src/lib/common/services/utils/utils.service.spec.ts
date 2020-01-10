@@ -1,7 +1,7 @@
-import {inject, TestBed} from '@angular/core/testing';
-import {UtilsService} from './utils.service';
+import { inject, TestBed } from '@angular/core/testing';
+import { UtilsService } from './utils.service';
 import * as momentNs from 'moment';
-import {IDate} from '../../models/date.model';
+import { IDate } from '../../models/date.model';
 
 const moment = momentNs;
 
@@ -98,7 +98,7 @@ describe('Service: ObUtilsService', () => {
   }));
 
   it('should convertPropsToMoment method', inject([UtilsService], (service: UtilsService) => {
-    const obj = {min: '14-01-1987', max: '14-01-1987'};
+    const obj = { min: '14-01-1987', max: '14-01-1987' };
     service.convertPropsToMoment(obj, 'DD-MM-YYYY', ['min', 'max']);
     expect(moment.isMoment(obj.min)).toBeTruthy();
     expect(moment.isMoment(obj.max)).toBeTruthy();
@@ -128,5 +128,28 @@ describe('Service: ObUtilsService', () => {
       .toEqual(moment().format(format) + ' | ' + moment().add(1, 'd').format(format));
     expect(service.convertToString([moment().format(format), moment().add(1, 'd').format(format)], format))
       .toEqual(moment().format(format) + ' | ' + moment().add(1, 'd').format(format));
+  }));
+
+  it('should convert from string to moment array with a single entry', inject([UtilsService], (service: UtilsService) => {
+    const format = 'DD.MM.YYYY HH:mm:ss';
+    const date = '01.01.1970 00:00:00'
+    expect(service.convertToMomentArray(date, { format: format })).toEqual([moment(date, format, true)]);
+  }));
+
+  it('should convert from string array to moment array', inject([UtilsService], (service: UtilsService) => {
+    const format = 'DD.MM.YYYY HH:mm:ss';
+    const date = ['01.01.1970 00:00:00', '02.02.1972 02:02:02'];
+    expect(service.convertToMomentArray(date, { format: format })).toEqual([moment(date[0], format, true), moment(date[1], format, true)]);
+    expect(service.convertToMomentArray([date[0], null], { format: format })).toEqual([moment(date[0], format, true)]);
+  }));
+
+  it('should convert from string as UTC if configured', inject([UtilsService], (service: UtilsService) => {
+    const format = 'DD.MM.YYYY HH:mm:ss';
+    const date = '01.01.1970 00:00:00';
+    expect(service.convertToMomentArray(date, { format: format, parseAsUTC: true }))
+      .toEqual([moment.utc(date, format, true)]);
+
+    expect(service.convertToMomentArray(date, { format: format, parseAsUTC: true })[0].toISOString())
+      .not.toEqual(moment(date, format, true).toISOString()); // may be the same if timezone is +00:00
   }));
 });

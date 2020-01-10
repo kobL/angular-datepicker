@@ -102,18 +102,10 @@ export class UtilsService {
     let retVal: Moment[];
     switch (this.getInputType(value, config.allowMultiSelect)) {
       case (ECalendarValue.String):
-        if (config.parseAsUTC) {
-          retVal = [moment.utc(<string>value, config.format, true)];
-        } else {
-          retVal = [moment(<string>value, config.format, true)];
-        }
+        retVal = [this.parseStringAsMoment(<string>value, config.format, config.parseAsUTC)];
         break;
       case (ECalendarValue.StringArr):
-        if (config.parseAsUTC) {
-          retVal = (<string[]>value).map(v => v ? moment.utc(v, config.format, true) : null).filter(Boolean);
-        } else {
-          retVal = (<string[]>value).map(v => v ? moment(v, config.format, true) : null).filter(Boolean);
-        }
+        retVal = this.parseStringArrayAsMoment(<string[]>value, config.format, config.parseAsUTC);
         break;
       case (ECalendarValue.Moment):
         retVal = value ? [(<Moment>value).clone()] : [];
@@ -357,5 +349,16 @@ export class UtilsService {
     } else {
       return elem;
     }
+  }
+
+  private parseStringAsMoment(value: string, format: string, parseAsUTC: boolean): Moment {
+    if (parseAsUTC) {
+      return moment.utc(value, format, true);
+    }
+    return moment(value, format, true);
+  }
+
+  private parseStringArrayAsMoment(value: string[], format: string, parseAsUTC: boolean): Moment[] {
+    return value.map(v => v ? this.parseStringAsMoment(v, format, parseAsUTC) : null).filter(Boolean);
   }
 }
