@@ -1,13 +1,13 @@
-import {ECalendarValue} from '../../types/calendar-value-enum';
-import {SingleCalendarValue} from '../../types/single-calendar-value';
-import {Injectable} from '@angular/core';
+import { ECalendarValue } from '../../types/calendar-value-enum';
+import { SingleCalendarValue } from '../../types/single-calendar-value';
+import { Injectable } from '@angular/core';
 import * as momentNs from 'moment';
-import {Moment, unitOfTime} from 'moment';
-import {CalendarValue} from '../../types/calendar-value';
-import {IDate} from '../../models/date.model';
-import {CalendarMode} from '../../types/calendar-mode';
-import {DateValidator} from '../../types/validator.type';
-import {ICalendarInternal} from '../../models/calendar.model';
+import { Moment, unitOfTime } from 'moment';
+import { CalendarValue } from '../../types/calendar-value';
+import { IDate } from '../../models/date.model';
+import { CalendarMode } from '../../types/calendar-mode';
+import { DateValidator } from '../../types/validator.type';
+import { ICalendarInternal } from '../../models/calendar.model';
 
 const moment = momentNs;
 
@@ -57,9 +57,9 @@ export class UtilsService {
 
   // todo:: add unit test
   getDefaultDisplayDate(current: Moment,
-                        selected: Moment[],
-                        allowMultiSelect: boolean,
-                        minDate: Moment): Moment {
+    selected: Moment[],
+    allowMultiSelect: boolean,
+    minDate: Moment): Moment {
     if (current) {
       return current.clone();
     } else if (minDate && minDate.isAfter(moment())) {
@@ -98,14 +98,22 @@ export class UtilsService {
 
   // todo:: add unit test
   convertToMomentArray(value: CalendarValue,
-                       config: {allowMultiSelect?: boolean, format?: string, parseTimeAsUTC?: boolean}): Moment[] {
+    config: { allowMultiSelect?: boolean, format?: string, parseAsUTC?: boolean }): Moment[] {
     let retVal: Moment[];
     switch (this.getInputType(value, config.allowMultiSelect)) {
       case (ECalendarValue.String):
-        retVal = value ? [moment(<string>value, config.format, true)] : [];
+        if (config.parseAsUTC) {
+          retVal = [moment.utc(<string>value, config.format, true)];
+        } else {
+          retVal = [moment(<string>value, config.format, true)];
+        }
         break;
       case (ECalendarValue.StringArr):
-        retVal = (<string[]>value).map(v => v ? moment(v, config.format, true) : null).filter(Boolean);
+        if (config.parseAsUTC) {
+          retVal = (<string[]>value).map(v => v ? moment.utc(v, config.format, true) : null).filter(Boolean);
+        } else {
+          retVal = (<string[]>value).map(v => v ? moment(v, config.format, true) : null).filter(Boolean);
+        }
         break;
       case (ECalendarValue.Moment):
         retVal = value ? [(<Moment>value).clone()] : [];
@@ -122,8 +130,8 @@ export class UtilsService {
 
   // todo:: add unit test
   convertFromMomentArray(format: string,
-                         value: Moment[],
-                         convertTo: ECalendarValue): CalendarValue {
+    value: Moment[],
+    convertTo: ECalendarValue): CalendarValue {
     switch (convertTo) {
       case (ECalendarValue.String):
         return value[0] && value[0].format(format);
@@ -171,9 +179,9 @@ export class UtilsService {
   }
 
   updateSelected(isMultiple: boolean,
-                 currentlySelected: Moment[],
-                 date: IDate,
-                 granularity: unitOfTime.Base = 'day'): Moment[] {
+    currentlySelected: Moment[],
+    date: IDate,
+    granularity: unitOfTime.Base = 'day'): Moment[] {
     if (isMultiple) {
       return !date.selected
         ? currentlySelected.concat([date.date])
@@ -206,9 +214,9 @@ export class UtilsService {
     }
   }
 
-  createValidator({minDate, maxDate, minTime, maxTime}: DateLimits,
-                  format: string,
-                  calendarType: CalendarMode): DateValidator {
+  createValidator({ minDate, maxDate, minTime, maxTime }: DateLimits,
+    format: string,
+    calendarType: CalendarMode): DateValidator {
     let isValid: boolean;
     let value: Moment[];
     const validators = [];
@@ -303,9 +311,9 @@ export class UtilsService {
   }
 
   shouldShowCurrent(showGoToCurrent: boolean,
-                    mode: CalendarMode,
-                    min: Moment,
-                    max: Moment): boolean {
+    mode: CalendarMode,
+    min: Moment,
+    max: Moment): boolean {
     return showGoToCurrent &&
       mode !== 'time' &&
       this.isDateInRange(moment(), min, max);
@@ -315,7 +323,7 @@ export class UtilsService {
     return date.isBetween(from, to, 'day', '[]');
   }
 
-  convertPropsToMoment(obj: {[key: string]: any}, format: string, props: string[]) {
+  convertPropsToMoment(obj: { [key: string]: any }, format: string, props: string[]) {
     props.forEach((prop) => {
       if (obj.hasOwnProperty(prop)) {
         obj[prop] = this.convertToMoment(obj[prop], format);
