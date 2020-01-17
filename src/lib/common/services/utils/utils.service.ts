@@ -98,14 +98,14 @@ export class UtilsService {
 
   // todo:: add unit test
   convertToMomentArray(value: CalendarValue,
-    config: { allowMultiSelect?: boolean, format?: string, parseAsUTC?: boolean }): Moment[] {
+    config: { allowMultiSelect?: boolean, format?: string, parseTimeAsUTC?: boolean }): Moment[] {
     let retVal: Moment[];
     switch (this.getInputType(value, config.allowMultiSelect)) {
       case (ECalendarValue.String):
-        retVal = [this.parseStringAsMoment(<string>value, config.format, config.parseAsUTC)];
+        retVal = [this.parseStringAsMoment(<string>value, config.format, config.parseTimeAsUTC)];
         break;
       case (ECalendarValue.StringArr):
-        retVal = this.parseStringArrayAsMoment(<string[]>value, config.format, config.parseAsUTC);
+        retVal = this.parseStringArrayAsMoment(<string[]>value, config.format, config.parseTimeAsUTC);
         break;
       case (ECalendarValue.Moment):
         retVal = value ? [(<Moment>value).clone()] : [];
@@ -351,14 +351,14 @@ export class UtilsService {
     }
   }
 
-  private parseStringAsMoment(value: string, format: string, parseAsUTC: boolean): Moment {
-    if (parseAsUTC) {
+  private parseStringAsMoment(value: string, format: string, parseTimeAsUTC: boolean): Moment {
+    if (parseTimeAsUTC) {
       return moment.utc(value, format, true);
     }
     return moment(value, format, true);
   }
 
-  private parseStringArrayAsMoment(value: string[], format: string, parseAsUTC: boolean): Moment[] {
-    return value.map(v => v ? this.parseStringAsMoment(v, format, parseAsUTC) : null).filter(Boolean);
+  private parseStringArrayAsMoment(value: string[], format: string, parseTimeAsUTC: boolean): Moment[] {
+    return value.map(v => v ? this.parseStringAsMoment(v, format, parseTimeAsUTC) : null).filter(Boolean);
   }
 }

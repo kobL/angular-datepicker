@@ -146,7 +146,7 @@ export class TimeSelectComponent implements OnInit, OnChanges, ControlValueAcces
         .convertToMomentArray(value, {
           allowMultiSelect: false,
           format: this.timeSelectService.getTimeFormat(this.componentConfig),
-          parseAsUTC: this.config.parseTimeAsUTC})[0];
+          parseTimeAsUTC: this.config.parseTimeAsUTC})[0];
       if (momentValue.isValid()) {
         this.selected = momentValue;
         this.inputValueType = this.utilsService

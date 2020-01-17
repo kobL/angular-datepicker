@@ -124,7 +124,7 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
         .convertToMomentArray(value, {
           format: this.componentConfig.format,
           allowMultiSelect: false,
-          parseAsUTC: this.config.parseTimeAsUTC})[0];
+          parseTimeAsUTC: this.config.parseTimeAsUTC})[0];
       this.inputValueType = this.utilsService
         .getInputType(this.inputValue, false);
     } else {

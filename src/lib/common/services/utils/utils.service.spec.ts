@@ -146,10 +146,10 @@ describe('Service: ObUtilsService', () => {
   it('should convert from string as UTC if configured', inject([UtilsService], (service: UtilsService) => {
     const format = 'DD.MM.YYYY HH:mm:ss';
     const date = '01.01.1970 00:00:00';
-    expect(service.convertToMomentArray(date, { format: format, parseAsUTC: true }))
+    expect(service.convertToMomentArray(date, { format: format, parseTimeAsUTC: true }))
       .toEqual([moment.utc(date, format, true)]);
 
-    expect(service.convertToMomentArray(date, { format: format, parseAsUTC: true })[0].toISOString())
+    expect(service.convertToMomentArray(date, { format: format, parseTimeAsUTC: true })[0].toISOString())
       .not.toEqual(moment(date, format, true).toISOString()); // may be the same if timezone is +00:00
   }));
 });
